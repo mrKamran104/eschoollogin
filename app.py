@@ -28,8 +28,6 @@ class Users(db.Model):
 
 @app.route('/')
 def index():
-    if 'user' in session:
-        session.pop('user', None)
     return render_template('index.html')
 
 
@@ -138,6 +136,11 @@ def tchrother():
     else:
         return render_template('index.html')
 
+@app.route('/logout')
+def login():
+    # if 'user' in session:
+        session.pop('user', None)
+        return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

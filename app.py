@@ -46,8 +46,6 @@ def admin():
                 return render_template('student.html', name=uname, role=user_found.role)
             else:
                 return render_template('admin.html', name=uname, role=user_found.role)
-        else:
-            return render_template('index.html')
     elif user_found != "":
         if user_found.role == "Teacher":
             return render_template('teacher.html', name=user_found.uname, role=user_found.role)

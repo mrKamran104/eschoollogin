@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Elementry School System</title>
+  </head>
+  <body>
+  <div style="background-image: url(static/images/cbs.jpg); height:100px; ">
+					<span >
+						<h2>Welcome {{name}}, Status ({{role}})</h2><button style="float:right; margin-right:50px;"><a href="/" >Log Out</a></button>
+					</span>
+				</div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link" id="home-tab" href="/panel" role="tab" aria-selected="false">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" id="profile-tab" href="/AddorRemoveMember" role="tab" aria-selected="true">Add/Remove Member</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" href="/editprofile" role="tab" aria-selected="false">Edit Profile</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <!-- <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">...</div> -->
+  <div class="tab-pane fade show active" id="profile" role="tabpanel" align="center">
+
+
+                    <form action="/AddorRemoveMember" method="post"><br><br>
+                    <input type="text" name="username" placeholder="Username" required><br><br>
+                    <input type="text" name="email" placeholder="E-mail" required><br><br>
+                    <input type="text" name="password" value="{{pswrd}}" readonly><br><br>
+                    <select name="role">
+                        <!--        <option>Admin</option>-->
+                        <option>Teacher</option>
+                        <option>Student</option>
+                    </select>
+                    <input type="submit" name="signup" value="Sign Up"/><br><br>
+                </form>
+
+
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>E-Mail</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                        <th colspan="2">Operations</th>
+                    </tr>
+                    </thead>
+                    {% for user in users %}
+                        {% if user.role!="Admin" %}
+                            <form action="/AddorRemoveMember" method="post">
+                                <tr>
+                                    <td><input name="uname" value={{user["uname"]}} readonly /></td>
+                                    <td><input name="email" value={{user["email"]}} required /></td>
+                                    <td><input name="password" value={{user["password"]}} /></td>
+                                    <td contenteditable="true">
+                                        <select name="role">
+                                            <option {% if 'Teacher'==user.role %}selected{% endif %}>Teacher</option>
+                                            <option {% if 'Student'==user.role %}selected{% endif %}>Student</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="submit" name="del" value="DELETE"/>
+                                        <input type="submit" name="update" value="UPDATE"/>
+                                    </td>
+                                </tr>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+</table>
+
+  </div>
+</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="/AddorRemoveMember" method="post"><br><br>-->
+<!--    <input type="text" name="username" placeholder="Username"><br><br>-->
+<!--    <input type="text" name="email" placeholder="E-mail"><br><br>-->
+<!--    <input type="text" name="password" placeholder="Password"><br><br>-->
+<!--    <select name="role">-->
+<!--        &lt;!&ndash;        <option>Admin</option>&ndash;&gt;-->
+<!--        <option>Teacher</option>-->
+<!--        <option>Student</option>-->
+<!--    </select>-->
+<!--    <input type="submit" name="signup" value="Sign Up"/><br><br>-->
+<!--</form>-->
+
+<!--<a href="/panel">Back to your Panel</a><br><br>-->
+
+<!--<table border="1">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>UserName</th>-->
+<!--        <th>E-Mail</th>-->
+<!--        <th>Password</th>-->
+<!--        <th>Role</th>-->
+<!--        <th colspan="2">Operations</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    {% for user in users %}-->
+<!--        {% if user.role!="Admin" %}-->
+<!--            <form action="/AddorRemoveMember" method="post">-->
+<!--                <tr>-->
+<!--                    <td><input name="uname" value={{user["uname"]}} readonly/></td>-->
+<!--                    <td><input name="email" value={{user["email"]}}/></td>-->
+<!--                    <td><input name="password" value={{user["password"]}}/></td>-->
+<!--                    <td contenteditable="true">-->
+<!--                        <select name="role">-->
+<!--                            <option {% if 'Teacher'==user.role %}selected{% endif %}>Teacher</option>-->
+<!--                            <option {% if 'Student'==user.role %}selected{% endif %}>Student</option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <input type="submit" name="del" value="DELETE"/>-->
+<!--                        <input type="submit" name="update" value="UPDATE"/>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </form>-->
+<!--        {% endif %}-->
+<!--    {% endfor %}-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->

@@ -17,25 +17,25 @@
 					</span>
 				</div>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link" id="home-tab" href="/panel" role="tab" aria-selected="false">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" id="profile-tab" href="/AddorRemoveMember" role="tab" aria-selected="true">Add/Remove Member</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="contact-tab" href="/editprofile" role="tab" aria-selected="false">Edit Profile</a>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <!-- <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">...</div> -->
-  <div class="tab-pane fade show active" id="profile" role="tabpanel" align="center">
+                  <li class="nav-item">
+                    <a class="nav-link" id="home-tab" href="/panel" role="tab" aria-selected="false">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="profile-tab" href="/AddorRemoveMember" role="tab" aria-selected="true">Add/Remove Member</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" href="/editprofile" role="tab" aria-selected="false">Edit Profile</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <!-- <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">...</div> -->
+                  <div class="tab-pane fade show active" id="profile" role="tabpanel" align="center">
 
 
                     <form action="/AddorRemoveMember" method="post"><br><br>
                     <input type="text" name="username" placeholder="Username" required><br><br>
                     <input type="text" name="email" placeholder="E-mail" required><br><br>
-                    <input type="text" name="password" value="{{pswrd}}" readonly><br><br>
+                    <input type="text" name="password" value={{pswrd}} readonly><br><br>
                     <select name="role">
                         <!--        <option>Admin</option>-->
                         <option>Teacher</option>

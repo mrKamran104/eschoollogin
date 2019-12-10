@@ -28,13 +28,12 @@ class Users(db.Model):
 @app.route('/')
 def index():
     global user_found
-    if 'user' in session and session['user'] == user_found.uname:
-        if user_found.role == "Teacher":
-            return render_template('teacher.html', name=user_found.uname, role=user_found.role)
-        elif user_found.role == "Student":
-            return render_template('student.html', name=user_found.uname, role=user_found.role)
-        else:
-            return render_template('admin.html', name=user_found.uname, role=user_found.role)
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Teacher":
+        return render_template('teacher.html', name=user_found.uname, role=user_found.role)
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Student":
+        return render_template('student.html', name=user_found.uname, role=user_found.role)
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Admin":
+        return render_template('admin.html', name=user_found.uname, role=user_found.role)
 
     return render_template('index.html')
 
@@ -48,21 +47,13 @@ def admin():
         user_found = Users.query.filter_by(uname=uname, password=pwrd).first()
         if user_found:
             session['user'] = user_found.uname
-            if user_found.role == "Teacher":
-                return render_template('teacher.html', name=user_found.uname, role=user_found.role)
-            elif user_found.role == "Student":
-                return render_template('student.html', name=user_found.uname, role=user_found.role)
-            else:
-                return render_template('admin.html', name=user_found.uname, role=user_found.role)
-        else:
-            return render_template('index.html')
-    elif user_found:
-        if user_found.role == "Teacher":
-            return render_template('teacher.html', name=user_found.uname, role=user_found.role)
-        elif user_found.role == "Student":
-            return render_template('student.html', name=user_found.uname, role=user_found.role)
-        else:
-            return render_template('admin.html', name=user_found.uname, role=user_found.role)
+
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Teacher":
+        return render_template('teacher.html', name=user_found.uname, role=user_found.role)
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Student":
+        return render_template('student.html', name=user_found.uname, role=user_found.role)
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Admin":
+        return render_template('admin.html', name=user_found.uname, role=user_found.role)
     else:
         return render_template('index.html')
 
@@ -97,7 +88,7 @@ def editprofile():
 @app.route('/AddorRemoveMember', methods=["POST", "GET"])
 def AddorRemoveMember():
     global user_found
-    if 'user' in session and session['user'] == user_found.uname:
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Admin":
         if 'Sign Up' in request.form.values():
             user = Users()
             user.uname = request.form['username']
@@ -130,7 +121,7 @@ def AddorRemoveMember():
 @app.route('/stdother')
 def stdother():
     global user_found
-    if 'user' in session and session['user'] == user_found.uname:
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Student":
         return render_template('stdother.html', name=user_found.uname, role=user_found.role)
 
     return render_template('index.html')
@@ -139,7 +130,7 @@ def stdother():
 @app.route('/tchrother')
 def tchrother():
     global user_found
-    if 'user' in session and session['user'] == user_found.uname:
+    if 'user' in session and session['user'] == user_found.uname and user_found.role == "Teacher":
         return render_template('tchrother.html', name=user_found.uname, role=user_found.role)
     return render_template('index.html')
 

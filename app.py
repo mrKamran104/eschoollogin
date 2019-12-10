@@ -36,7 +36,7 @@ def index():
             return render_template('student.html', name=user_found.uname, role=user_found.role)
         else:
             return render_template('admin.html', name=user_found.uname, role=user_found.role)
-    
+
     return render_template('index.html')
 
 

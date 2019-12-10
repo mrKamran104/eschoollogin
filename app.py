@@ -59,16 +59,16 @@ def admin():
     else:
         return render_template('index.html')
 
-@app.before_request
-def before_request():
-    g.user=None
-    if 'user' in session:
-        g.user = session['user']
+# @app.before_request
+# def before_request():
+#     g.user=None
+#     if 'user' in session:
+#         g.user = session['user']
 
 
 @app.route('/editprofile', methods=["POST", "GET"])
 def editprofile():
-    if g.user:
+    if 'user' in session:
         global user_found
         if 'UPDATE' in request.form.values():
             email = request.form['email']
@@ -95,7 +95,7 @@ def editprofile():
 
 @app.route('/AddorRemoveMember', methods=["POST", "GET"])
 def AddorRemoveMember():
-    if g.user:
+    if 'user' in session:
         global user_found
         if 'Sign Up' in request.form.values():
             user = Users()
@@ -129,7 +129,7 @@ def AddorRemoveMember():
 @app.route('/stdother')
 def stdother():
     global user_found
-    if g.user:
+    if 'user' in session:
         return render_template('stdother.html', name=user_found.uname, role=user_found.role)
 
     return render_template('index.html')
@@ -138,10 +138,10 @@ def stdother():
 @app.route('/tchrother')
 def tchrother():
     global user_found
-    if g.user:
+    if 'user' in session:
         return render_template('tchrother.html', name=user_found.uname, role=user_found.role)
-
     return render_template('index.html')
+
 
 @app.route('/logout')
 def login():

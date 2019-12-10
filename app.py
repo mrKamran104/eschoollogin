@@ -3,10 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import random
 
-user_found = ""
 app = Flask(__name__)
+user_found = ""
 app.config['SECRET_KEY'] = 'the-random-string'
-app.secret_key = os.urandom(24)
+#app.secret_key = os.urandom(24)
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "schooldb.db"))

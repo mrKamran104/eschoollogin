@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, g
 from flask_sqlalchemy import SQLAlchemy
 import os
 import random
@@ -35,17 +35,20 @@ def index():
 def admin():
     global user_found
     if request.method == "POST":
+        session.pop('user', None)
         uname = request.form['target_uname']
-        session['user'] = uname
         pwrd = request.form['target_pass']
         user_found = Users.query.filter_by(uname=uname, password=pwrd).first()
         if user_found:
+            session['user'] = uname
             if user_found.role == "Teacher":
                 return render_template('teacher.html', name=uname, role=user_found.role)
             elif user_found.role == "Student":
                 return render_template('student.html', name=uname, role=user_found.role)
             else:
                 return render_template('admin.html', name=uname, role=user_found.role)
+        else:
+            return render_template('index.html')
     elif user_found != "":
         if user_found.role == "Teacher":
             return render_template('teacher.html', name=user_found.uname, role=user_found.role)
@@ -56,10 +59,16 @@ def admin():
     else:
         return render_template('index.html')
 
+@app.before_request
+def before_request():
+    g.user=None
+    if 'user' in session:
+        g.user = session['user']
+
 
 @app.route('/editprofile', methods=["POST", "GET"])
 def editprofile():
-    if 'user' in session:
+    if g.user:
         global user_found
         if 'UPDATE' in request.form.values():
             email = request.form['email']
@@ -80,13 +89,13 @@ def editprofile():
         else:
             return render_template('editprofile.html', uname=user_found.uname, email=user_found.email,
                                    pswrd=user_found.password, role=user_found.role)
-    else:
-        return render_template('index.html')
+
+    return render_template('index.html')
 
 
 @app.route('/AddorRemoveMember', methods=["POST", "GET"])
 def AddorRemoveMember():
-    if 'user' in session:
+    if g.user:
         global user_found
         if 'Sign Up' in request.form.values():
             user = Users()
@@ -113,26 +122,26 @@ def AddorRemoveMember():
         users = Users.query.all()
         return render_template('AddorRemoveMember.html', users=users, name=user_found.uname, role=user_found.role,
                                pswrd=pswrd)
-    else:
-        return render_template('index.html')
+
+    return render_template('index.html')
 
 
 @app.route('/stdother')
 def stdother():
     global user_found
-    if 'user' in session:
+    if g.user:
         return render_template('stdother.html', name=user_found.uname, role=user_found.role)
-    else:
-        return render_template('index.html')
+
+    return render_template('index.html')
 
 
 @app.route('/tchrother')
 def tchrother():
     global user_found
-    if 'user' in session:
+    if g.user:
         return render_template('tchrother.html', name=user_found.uname, role=user_found.role)
-    else:
-        return render_template('index.html')
+
+    return render_template('index.html')
 
 @app.route('/logout')
 def login():

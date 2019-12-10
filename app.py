@@ -5,7 +5,7 @@ import random
 
 user_found = ""
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'the-random-string'
 app.secret_key = os.urandom(24)
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -35,11 +35,11 @@ def index():
 def admin():
     global user_found
     if request.method == "POST":
-        session.pop('user', None)
         uname = request.form['target_uname']
         pwrd = request.form['target_pass']
         user_found = Users.query.filter_by(uname=uname, password=pwrd).first()
         if user_found:
+            session.pop('user', None)
             session['user'] = uname
             if user_found.role == "Teacher":
                 return render_template('teacher.html', name=uname, role=user_found.role)

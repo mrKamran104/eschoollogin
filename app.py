@@ -5,8 +5,8 @@ import random
 
 app = Flask(__name__)
 user_found = ""
-#app.config['SECRET_KEY'] = 'the-random-string'
-app.secret_key = os.urandom(24)
+app.config['SECRET_KEY'] = 'the-random-string'
+#app.secret_key = os.urandom(24)
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "schooldb.db"))
@@ -66,6 +66,7 @@ def admin():
             return render_template('admin.html', name=user_found.uname, role=user_found.role)
     else:
         return render_template('index.html')
+
 
 # @app.before_request
 # def before_request():
@@ -154,8 +155,9 @@ def tchrother():
 @app.route('/logout')
 def login():
     # if 'user' in session:
-        session.pop('user', None)
-        return render_template('index.html')
+    session.pop('user', None)
+    return render_template('index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

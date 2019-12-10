@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, g
+from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 import os
 import random
@@ -57,7 +57,7 @@ def admin():
                 return render_template('admin.html', name=uname, role=user_found.role)
         else:
             return render_template('index.html')
-    elif user_found != "":
+    elif user_found:
         if user_found.role == "Teacher":
             return render_template('teacher.html', name=user_found.uname, role=user_found.role)
         elif user_found.role == "Student":

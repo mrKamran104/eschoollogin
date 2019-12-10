@@ -28,6 +28,7 @@ class Users(db.Model):
 
 @app.route('/')
 def index():
+    session.pop('user', None)
     return render_template('index.html')
 
 
@@ -39,7 +40,6 @@ def admin():
         pwrd = request.form['target_pass']
         user_found = Users.query.filter_by(uname=uname, password=pwrd).first()
         if user_found:
-            session.pop('user', None)
             session['user'] = uname
             if user_found.role == "Teacher":
                 return render_template('teacher.html', name=uname, role=user_found.role)

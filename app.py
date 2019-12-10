@@ -154,8 +154,10 @@ def tchrother():
 
 @app.route('/logout')
 def login():
+    global user_found
     # if 'user' in session:
     session.pop('user', None)
+    user_found=""
     return render_template('index.html')
 
 

@@ -68,8 +68,8 @@ def admin():
 
 @app.route('/editprofile', methods=["POST", "GET"])
 def editprofile():
-    if 'user' in session:
-        global user_found
+    global user_found
+    if 'user' in session and session['user'] == user_found.uname:
         if 'UPDATE' in request.form.values():
             email = request.form['email']
             password = request.form['password']
@@ -95,8 +95,8 @@ def editprofile():
 
 @app.route('/AddorRemoveMember', methods=["POST", "GET"])
 def AddorRemoveMember():
-    if 'user' in session:
-        global user_found
+    global user_found
+    if 'user' in session and session['user'] == user_found.uname:
         if 'Sign Up' in request.form.values():
             user = Users()
             user.uname = request.form['username']
@@ -129,7 +129,7 @@ def AddorRemoveMember():
 @app.route('/stdother')
 def stdother():
     global user_found
-    if 'user' in session:
+    if 'user' in session and session['user'] == user_found.uname:
         return render_template('stdother.html', name=user_found.uname, role=user_found.role)
 
     return render_template('index.html')
@@ -138,7 +138,7 @@ def stdother():
 @app.route('/tchrother')
 def tchrother():
     global user_found
-    if 'user' in session:
+    if 'user' in session and session['user'] == user_found.uname:
         return render_template('tchrother.html', name=user_found.uname, role=user_found.role)
     return render_template('index.html')
 

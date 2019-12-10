@@ -36,7 +36,7 @@ def index():
             return render_template('student.html', name=user_found.uname, role=user_found.role)
         else:
             return render_template('admin.html', name=user_found.uname, role=user_found.role)
-
+    
     return render_template('index.html')
 
 
@@ -48,7 +48,7 @@ def admin():
         pwrd = request.form['target_pass']
         user_found = Users.query.filter_by(uname=uname, password=pwrd).first()
         if user_found:
-            session['user'] = uname
+            session['user'] = user_found.uname
             if user_found.role == "Teacher":
                 return render_template('teacher.html', name=uname, role=user_found.role)
             elif user_found.role == "Student":

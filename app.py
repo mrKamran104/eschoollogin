@@ -28,7 +28,15 @@ class Users(db.Model):
 
 @app.route('/')
 def index():
-    session.pop('user', None)
+    global user_found
+    if 'user' in session and session['user'] == user_found.uname:
+        if user_found.role == "Teacher":
+            return render_template('teacher.html', name=user_found.uname, role=user_found.role)
+        elif user_found.role == "Student":
+            return render_template('student.html', name=user_found.uname, role=user_found.role)
+        else:
+            return render_template('admin.html', name=user_found.uname, role=user_found.role)
+
     return render_template('index.html')
 
 

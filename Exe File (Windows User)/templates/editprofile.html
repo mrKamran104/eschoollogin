@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Elementry School System</title>
+  </head>
+  <body>
+  <div style="background-image: url(static/images/cbs.jpg); height:100px;">
+					<span >
+						<h2>Welcome {{uname}}, Status ({{role}})</h2><button style="float:right; margin-right:50px;"><a href="/logout" >Log Out</a></button>
+					</span>
+				</div>
+               <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link " id="home-tab" href="/panel" role="tab" aria-selected="false">Home</a>
+                </li>
+                <li class="nav-item">
+                    {% if role=="Admin" %}
+                        <a class="nav-link"  href="/AddorRemoveMember" role="tab" aria-selected="false">Add/Remove Member</a>
+                    {% elif role=="Teacher" %}
+                        <a class="nav-link" href="/tchrother" role="tab" aria-selected="false">Others</a>
+                    {% else %}
+                        <a class="nav-link" href="/stdother" role="tab" aria-selected="false">Others</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" id="contact-tab" href="/editprofile" role="tab" aria-selected="true">Edit Profile</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" align="center">
+                    <br><br>
+                        <form action="/editprofile" method="post">
+                                <input name="uname" value={{uname}} disabled/><br><br>
+                                <input name="email" value={{email}} required /><br><br>
+                                <input name="password" value={{pswrd}} required /><br><br>
+                                <select name="role" disabled="True"><br><br>
+                                    {% if 'Admin'==role %}<option>Admin</option>{% endif %}
+                                    {% if 'Teacher' in role %}<option>Teacher</option>{% endif %}
+                                    {% if 'Student'==role %}<option>Student</option>{% endif %}
+                                </select><br><br>
+<!--        <input name="role" value={{role}} readonly/>-->
+                            {% if 'Admin'!=role %}
+                                <input type="submit" name="del" value="DELETE"/>
+                            {% endif %}
+                            <input type="submit" name="update" value="UPDATE"/>
+    </form>
+
+                </div>
+              </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
